@@ -68,48 +68,57 @@ shodan:
 
 
 
-```yaml
+```bash
 
-INPUT:
-   -d --domain string    domains to find subdomains for
-   -l DOMAINLIST         file containing list of domains for subdomain discovery
-   --scope SCOPE         show only subdomains in scope
+usage: sicarius.py [-h] [-d DOMAIN] [-e] [-l DOMAINLIST] [-sc] [-title] [--scope SCOPE] [-t THREADS] [-ip] [-v] [-silent] [-o OUTPUT]
 
-OUTPUT:
-   -sc, --status-code    show response status code
-   -ip, --ip             resolve IP address
-   -title, --title       show page title
-   -silent, --silent     show only subdomains in output
-   -o OUTPUT, --output OUTPUT
+options:
+  -h, --help            show this help message and exit
+  -d DOMAIN, --domain DOMAIN
+                        domains to find subdomains for
+  -e, --extract (working progress )         Extract: links ( inside JS to ), headers, useful for new domains and second order subdomain takeover
+  -l DOMAINLIST         file containing list of domains for subdomain discovery
+  -sc, --status-code    show response status code
+  -title, --title       show page title
+  --scope SCOPE         show only subdomains in scope
+  -t THREADS, --threads THREADS
+                        number of concurrent threads for resolving (default 40)
+  -ip, --ip             Resolve IP address
+  -v                    show verbose output
+  -silent, --silent     show only subdomains in output
+  -o OUTPUT, --output OUTPUT
                         file to write output to
-   
-CONFIG:
-   -t THREADS, --threads THREADS
-                        number of concurrent threads for resolving (default 50)
-
-DEBUG:
-   -v                    show verbose output
-   -h, --help            show this help message and exit
 ```
 
 ### Running Sicarius
-```console
-cat domains | python3 Sicarius.py
+```bash
+cat domains | python3 sicarius.py
 ```
 
+```bash
+### probe subdomains collected (like httpx, httprobe..)
+
+cat domains | python3 sicarius.py -sc
+
+```
+
+```bash
+## probe and resolve IP 
+cat domains | python3 sicarius.py -sc -ip
+```
 
 ### You can pipe with other tools like nuclei, httpx etc..
 
 ```bash
 # httpx to probe
-echo intigriti.com | python3 Sicarius.py -silent | httpx -silent 
+echo intigriti.com | python3 sicarius.py -silent | httpx -silent 
 # pipe to nuclei
-echo intigriti.com | python3 Sicarius.py -silent | httpx -silent | nuclei -t <path_to_nuclei_templates>
+echo intigriti.com | python3 sicarius.py -silent | httpx -silent | nuclei -t <path_to_nuclei_templates>
 
 ```
 
-```console
-python3 Sicarius.py -d intigriti.com
+```bash
+python3 sicarius.py -d intigriti.com
 
 	░██████╗██╗░█████╗░░█████╗░██████╗░██╗██╗░░░██╗░██████╗
 	██╔════╝██║██╔══██╗██╔══██╗██╔══██╗██║██║░░░██║██╔════╝
@@ -155,7 +164,7 @@ trust.intigriti.com
 
 ```
 
-### Congrats
+### Congrats/thanks
    - Thanks [duty1g](https://github.com/duty1g) ~ [subcat](https://github.com/duty1g/subcat) 🖤
 
 
