@@ -1,6 +1,7 @@
 
 # Sicarius
 
+
 ![alt text](https://img.shields.io/github/stars/unp4ck/Sicarius)
 ![alt text](https://img.shields.io/github/languages/top/unp4ck/Sicarius)
 ![alt text](https://img.shields.io/github/license/unp4ck/Sicarius)
@@ -9,8 +10,7 @@
 
 ![/static/banner.png](/static/woa.png)
 
-
-<h4 align="center">Fast subdomain enumeration tool.</h4>
+<h4 align="center">  🐴 ⚡️ Fast subdomain enumeration tool 🐴 ⚡️</h4>
 
 ### Install
 ```bash
@@ -28,12 +28,22 @@ pip3 install -r requirements.txt --user
 
 ### Post Installation
 
-API Key is needed before querying on third-party sites 
+API Key is needed before querying on third-party sites;
+
+##### Sicarius have 12 Sources to grab subdomains.
+
 * ```Shodan``` 
 * ```SecurityTrails```
 * ```Virustotal``` 
 * ```BinaryEdge```
-* Etc..
+* ```chaos``` - [https://chaos.projectdiscovery.io/#/docs](https://chaos.projectdiscovery.io/#/docs)
+* ```ctrsh```
+* ```wayback```
+* ```threatcrowd```
+* ```certspooter```
+* ```hackertarget```
+* ```urlscan```
+* ```alienvault```
 
 - **The API key setting can be done via `config.yaml`**
 
