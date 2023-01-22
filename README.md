@@ -8,10 +8,15 @@
 ![/static/banner.png](/static/woa.png)
 
 <h4 align="center">  🐴 ⚡️ Fast subdomain enumeration tool 🐴 ⚡️</h4>
+<a href="https://twitter.com/unp4ck"><img src="https://img.shields.io/twitter/follow/unp4ck.svg?logo=twitter"></a>
+
+
+
+ 🪳🫠
 ![alt text](https://img.shields.io/github/stars/unp4ck/Sicarius)
 ![alt text](https://img.shields.io/github/languages/top/unp4ck/Sicarius)
 ![alt text](https://img.shields.io/github/license/unp4ck/Sicarius)
-<a href="https://twitter.com/unp4ck"><img src="https://img.shields.io/twitter/follow/unp4ck.svg?logo=twitter"></a>
+
 
 ### Install
 ```bash
