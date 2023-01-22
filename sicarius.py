@@ -8,38 +8,18 @@ import time
 import os
 import sys
 import socket
-import argparse
 import warnings
 from datetime import datetime
 import runner.navigator as navigator
-from colored import fore, back, style, fg, bg, attr, stylize
-
-
+from utils import colors
+from cli import cli
+from crawlers import links
 warnings.filterwarnings("ignore")
 
 domainList = []
 scopeList = []
 
-class Colors:
-    def __init__(self) -> None:
-        self.animation = "🕸🕷"
-        self.reset = attr('reset')
-        self.light_grey = fg('light_gray')
-        self.dark_grey = fg('dark_gray')
-        self.red = fg('red')
-        self.green = fg('green')
-        self.bold = attr('bold')
-        self.white = fg('white')
-        self.magenta = fg('magenta')
-        self.yellow = fg('yellow')
-        self.blue = fg('blue')
-        self.purple = fg('purple_4a')
-        self.pink = fg('pink_3')
-        self.cyan = fg('cyan')
-        self.purple_3 = fg('purple_3')
-
-
-color = Colors()
+color = colors.Colors()
 animation = color.animation
 reset = color.reset
 yellow = color.yellow
@@ -55,11 +35,12 @@ purple = color.purple
 pink = color.pink
 purple3 = color.purple_3
 
+
 def banner():
     logo = ''' 
 \t
-\t {5}version/codename: darky 👹 {0}{{{2}1.0.0{5}#dev}}{0}@{3}unp4ck{1}
-\t {4}                 
+\t 
+\t                  
 \t░██████╗██╗░█████╗░░█████╗░██████╗░██╗██╗░░░██╗░██████╗
 \t██╔════╝██║██╔══██╗██╔══██╗██╔══██╗██║██║░░░██║██╔════╝
 \t╚█████╗░██║██║░░╚═╝███████║██████╔╝██║██║░░░██║╚█████╗░
@@ -67,10 +48,10 @@ def banner():
 \t██████╔╝██║╚█████╔╝██║░░██║██║░░██║██║╚██████╔╝██████╔╝
 \t╚═════╝░╚═╝░╚════╝░╚═╝░░╚═╝╚═╝░░╚═╝╚═╝░╚═════╝░╚═════╝░   
 \t       
-\t    =- Fast subdomain enumeration tool =-
+\t    -= ⚡️ Fast subdomain enumeration tool ⚡️ =-
 \t                    
 \t  
-\t  
+\t {2}[{4}{5}Version: 1.0.1{4} {3}Codename: darky {4}{0}[author: unp4ck]{4}{1}[tw: @unp4ck]{4}{2}] 
 '''
     logo = logo.format(light_grey, dark_grey, red, white, color.reset, magenta)
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -79,7 +60,7 @@ def banner():
 
 class Sicarius:
     def __init__(self, domain, output, threads=50, scope=False, debug=False, statusCode=False, title=False, ip=False,
-                 silent=False):
+                 silent=False, extract=False):
         self.domain = domain
         self.threads = threads
         self.scope = scope
@@ -89,7 +70,10 @@ class Sicarius:
         self.title = title
         self.ip = ip
         self.output = output
+        self.extract = extract
         self.scopeList = []
+        
+        
         if self.scope:
             self._log('Loading scope list')
             with open(self.scope) as f:
@@ -99,23 +83,24 @@ class Sicarius:
                 for ip in ipaddress.IPv4Network(line.strip()):
                     self.scopeList.append(str(ip))
 
-    def log(self, line):
-        if self.output and not self.silent:
-            with open(self.output, 'a') as output_file:
-                output_file.write("%s\n" % line)
-
     def fetchWorker(self, q):
         domainAndIp = q
         domainReturn = domainAndIp
         if self.statusCode:
             try:
-                statusCode = navigator.Navigator().downloadResponse('http://{}'.format(domainAndIp), 'STATUS',
-                                                                    'HEAD').status_code
+                statusCode = navigator.Navigator().downloadResponse('http://{}'.format(domainAndIp), 'STATUS', 'HEAD').status_code
             except:
                 statusCode = 'TIMEOUT'
 
             if statusCode is not None:
                 if statusCode == 200:
+                    if self.extract and self.output:
+                        urls = {}
+                        urls["http"] = "http://{0}".format(domainAndIp)
+                        urls["https"] = "https://{0}".format(domainAndIp)
+                        for url in urls.values():
+                            links.Crawler(url)
+
                     domainReturn += ' [{0}{1}{2}]'.format(green, statusCode, reset)
                     if self.title:
                         title = navigator.Navigator().downloadResponse('http://{}'.format(domainAndIp), 'TITLE',
@@ -126,10 +111,10 @@ class Sicarius:
                 else:
                     domainReturn += ' [{0}{1}{2}]'.format(dark_grey, statusCode, reset)
 
-            # if self.title and statusCode != 'TIMEOUT':
-            #     title = navigator.Navigator().downloadResponse('http://{}'.format(domainAndIp), 'TITLE',
-            #                                                    'GET')
-            #     domainReturn += ' [{0}{1}{2}]'.format(dark_grey, title, reset)
+            if self.title and statusCode != 'TIMEOUT':
+                title = navigator.Navigator().downloadResponse('http://{}'.format(domainAndIp), 'TITLE',
+                                                               'GET')
+                domainReturn += ' [{0}{1}{2}]'.format(dark_grey, title, reset)
 
         if self.ip:
             ipDomain = self.getIP(domainAndIp)
@@ -216,6 +201,31 @@ class Sicarius:
         th.start()
         th.join()
         print()
+
+    def getIP(self, subdomain):
+        try:
+            return socket.gethostbyname(subdomain)
+        except:
+            return '0.0.0.0'
+
+    """
+    
+    Only loggers :)
+    
+    """
+    ## save output
+    def log(self, line):
+        if self.output and not self.silent:
+            with open(self.output, 'a') as output_file:
+                output_file.write("%s\n" % line)
+
+    # save crawler output
+    def log_crawler(self, line):
+        if self.extract and self.output:
+            crawler_outname = self.output + "_data_crawler.txt"
+            with open(crawler_outname, 'a') as output_crawler:
+                output_crawler.write("{0}\n".format(line))
+        
     def _log(self, *args):
         if self.debug and not self.silent:
             now = datetime.now()
@@ -245,43 +255,9 @@ class Sicarius:
                 '\n' + reset + '[' + magenta + current_time + reset + '] [' + red + 'WRN' + reset + ']:' + reset + ' {0}'.format(
                     *args))
 
-    def getIP(self, subdomain):
-        try:
-            return socket.gethostbyname(subdomain)
-        except:
-            return '0.0.0.0'
-
-
-def argParserCommands():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('-d', '--domain', dest="domain", help='domains to find subdomains for',
-                        required=False)
-    parser.add_argument('-l', default=(None if sys.stdin.isatty() else sys.stdin), type=argparse.FileType('r'),
-                        dest="domainList", help='file containing list of domains for subdomain discovery',
-                        required=False)
-    parser.add_argument('-sc', '--status-code', dest="statusCode",
-                        help='show response status code', default=False,
-                        action="store_true")
-    parser.add_argument('-title', '--title', dest="title",
-                        help='show page title', default=False,
-                        action="store_true")
-    parser.add_argument('--scope', dest="scope",
-                        help='show only subdomains in scope', default=False)
-    parser.add_argument('-t', '--threads', type=int, dest="threads", default=50,
-                        help="number of concurrent threads for resolving (default 40)")
-    parser.add_argument('-ip', '--ip', dest="ip", help='Resolve IP address', default=False,
-                        action="store_true")
-    parser.add_argument('-v', dest="verbose", help='show verbose output', default=False,
-                        action="store_true")
-    parser.add_argument('-silent', '--silent', dest="silent", help='show only subdomains in output', default=False,
-                        action="store_true")
-    parser.add_argument("-o", "--output", help="file to write output to")
-
-    return parser
-
 
 if __name__ == "__main__":
-    args = argParserCommands().parse_args()
+    args = cli.Cli.argParserCommands().parse_args()
     if not args.silent:
         banner()
 
@@ -302,4 +278,4 @@ if __name__ == "__main__":
                             args.ip, args.silent)
             sicarius.getDomains()
     else:
-        argParserCommands().print_help()
+        cli.Cli.argParserCommands().print_help()

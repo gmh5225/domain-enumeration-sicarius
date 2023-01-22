@@ -7,7 +7,7 @@
 <a href="https://twitter.com/unp4ck"><img src="https://img.shields.io/twitter/follow/unp4ck.svg?logo=twitter"></a>
 
 
-![/static/banner.png](/static/banner.png)
+![/static/banner.png](/static/woa.png)
 
 
 <h4 align="center">Fast subdomain enumeration tool.</h4>
@@ -25,8 +25,6 @@ touch config/config.yaml
 
 pip3 install -r requirements.txt --user
 ```
-
-
 
 ### Post Installation
 
@@ -96,10 +94,6 @@ echo intigriti.com | python3 Sicarius.py -silent | httpx -silent | nuclei -t <pa
 ```console
 python3 Sicarius.py -d intigriti.com
 
- 
-
-	 version/codename: darky 👹 {1.0.0#dev}@unp4ck
-
 	░██████╗██╗░█████╗░░█████╗░██████╗░██╗██╗░░░██╗░██████╗
 	██╔════╝██║██╔══██╗██╔══██╗██╔══██╗██║██║░░░██║██╔════╝
 	╚█████╗░██║██║░░╚═╝███████║██████╔╝██║██║░░░██║╚█████╗░
@@ -107,20 +101,20 @@ python3 Sicarius.py -d intigriti.com
 	██████╔╝██║╚█████╔╝██║░░██║██║░░██║██║╚██████╔╝██████╔╝
 	╚═════╝░╚═╝░╚════╝░╚═╝░░╚═╝╚═╝░░╚═╝╚═╝░╚═════╝░╚═════╝░
 
-	    =- Fast subdomain enumeration tool =-
+	    -= ⚡️ Fast subdomain enumeration tool ⚡️ =-
 
 
+	 [Version: 1.0.1 Codename: darky [author: unp4ck][tw: @unp4ck]]
 
-
-[22:19:49] [ INFO]: alienvault.com 136 domains founded!✅
-[22:19:50] [ INFO]: certspotter.com 5 domains founded!✅
-[22:19:50] [ INFO]: urlscan.io 53 domains founded!✅
-[22:19:50] [ INFO]: hackertarget.com 10 domains founded!✅
-[22:19:50] [ INFO]: binaryedge.io 8 domains founded!✅
-[22:19:51] [ INFO]: virustotal 46 domains founded!✅
-[22:19:51] [ INFO]: crt.sh 250 domains founded!✅
-[22:19:51] [ INFO]: wayback 8685 domains founded!✅
-[22:19:56] [ INFO]: securitytrails.com 54 domains founded!✅
+[10:20:48] [ INFO]: urlscan.io 18 domains founded! ✅
+[10:20:48] [ INFO]: certspotter.com 6 domains founded! ✅
+[10:20:48] [ INFO]: virustotal 76 domains founded! ✅
+[10:20:49] [ INFO]: binaryedge.io 61 domains founded! ✅
+[10:20:49] [ INFO]: hackertarget.com 37 domains founded! ✅
+[10:20:49] [ INFO]: alienvault.com 127 domains founded! ✅
+[10:20:50] [ INFO]: securitytrails.com 116 domains founded! ✅
+[10:20:50] [ INFO]: wayback 24375 assets founded! ✅
+[10:20:50] [ INFO]: crt.sh 179 domains founded! ✅
 
 [22:19:57] [INF]: Found 58 for intigriti.com
 
@@ -144,11 +138,21 @@ trust.intigriti.com
 
 ```
 
+### Congrats
+   - Thanks [duty1g](https://github.com/duty1g) ~ [subcat](https://github.com/duty1g/subcat) 🖤
+
+
 ### Features
 
 ![/static/sc.gif](/static/sc.gif)
 
-- Modular,fast,lightweigth;
-- Wildcard elimination module;
-- Scope limitation based on given IP ranges list;
+- Modular,fast,lightweigth 🍦 
+- Wildcard elimination module 🙅🏽‍♂️ 
+- Scope limitation based on given IP ranges list 📸 
+- Extracts links and headers, for second order subdomain takeveover or new subs ✨ 🥷 ✨  -> | **Warning: the first time you run this method, it will download Chromium into your home directory (~/.pyppeteer)** ( render Javascript ;) ) ( WORKING PROGRESS !!)
 
+#### Meaning of sicarius
+
+```
+Sicarius is a genus of recluse spiders that is potentially medically significant to humans. It is one of three genera in its family, all venomous spiders known for a bite that can induce loxoscelism. They live in deserts and arid regions of the Neotropics, and females use a mixture of sand and silk when producing egg sacs. The name is Latin for assassin.
+```

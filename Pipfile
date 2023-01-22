@@ -10,6 +10,8 @@ pip = "*"
 install = "*"
 pyyaml = "*"
 colored = "*"
+beautifulsoup4 = "*"
+requests-html = "*"
 
 [dev-packages]
 

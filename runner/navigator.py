@@ -1,13 +1,13 @@
 import sys
 from datetime import datetime
-from sicarius import Colors
 import requests
 import re
 import urllib.parse
 from urllib3.exceptions import InsecureRequestWarning
+from utils import colors
 
 
-color = Colors()
+color = colors.Colors()
 animation = color.animation
 reset = color.reset
 yellow = color.yellow
@@ -24,8 +24,6 @@ pink = color.pink
 cyan = color.cyan
 
 class Navigator:
-
-
 
     def __init__(self):
         self.url = ''
@@ -65,15 +63,6 @@ class Navigator:
         else:
             return self.sessionRequest.get(url, timeout=5)  # status_code
 
-    def urlValidator(self, url):
-        regex = re.compile(
-            r'^(?:http|ftp)s?://'  # http:// or https://
-            r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)|'  # domain...
-            r'localhost|'  # localhost...
-            r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}|'  # ...or ipv4
-            r'\[?[A-F0-9]*:[A-F0-9:]+\]?)'  # ...or ipv6
-            r'(?::\d+)?'  # optional port
-            r'(?:/?|[/?]\S+)$', re.IGNORECASE)
 
     def filterUrl(self, url):
         urlClean = url
@@ -93,8 +82,16 @@ class Navigator:
         now = datetime.now()
         current_time = now.strftime("%H:%M:%S")
         sys.stdout.flush()
-        sys.stdout.writelines(
+
+
+        if Module == 'wayback':
+            sys.stdout.writelines(
             '\r[' + magenta + current_time + reset + '] ['+blue + " " + 'INFO' + reset + ']:' + cyan + " " + Module + pink + " " + str(
-                len(DOMAINS_LIST)) +  reset + " domains founded!✅                                             \n")
-        sys.stdout.flush()
+                len(DOMAINS_LIST)) +  reset + " assets founded! ✅                                             \n")
+            sys.stdout.flush()
+        else:
+            sys.stdout.writelines(
+                '\r[' + magenta + current_time + reset + '] ['+blue + " " + 'INFO' + reset + ']:' + cyan + " " + Module + pink + " " + str(
+                    len(DOMAINS_LIST)) +  reset + " domains founded! ✅                                             \n")
+            sys.stdout.flush()
 
