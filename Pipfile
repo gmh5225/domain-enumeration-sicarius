@@ -12,6 +12,7 @@ pyyaml = "*"
 colored = "*"
 beautifulsoup4 = "*"
 requests-html = "*"
+pipfile = "*"
 
 [dev-packages]
 

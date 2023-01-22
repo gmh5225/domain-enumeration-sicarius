@@ -86,12 +86,12 @@ class Navigator:
 
         if Module == 'wayback':
             sys.stdout.writelines(
-            '\r[' + magenta + current_time + reset + '] ['+blue + " " + 'INFO' + reset + ']:' + cyan + " " + Module + pink + " " + str(
+            '\r[' + magenta + current_time + reset + '] ['+blue + " " + '🔎' + reset + ']:' + cyan + " " + Module + pink + " " + str(
                 len(DOMAINS_LIST)) +  reset + " assets founded! ✅                                             \n")
             sys.stdout.flush()
         else:
             sys.stdout.writelines(
-                '\r[' + magenta + current_time + reset + '] ['+blue + " " + 'INFO' + reset + ']:' + cyan + " " + Module + pink + " " + str(
+                '\r[' + magenta + current_time + reset + '] ['+blue + " " + '🔎' + reset + ']:' + cyan + " " + Module + pink + " " + str(
                     len(DOMAINS_LIST)) +  reset + " domains founded! ✅                                             \n")
             sys.stdout.flush()
 
